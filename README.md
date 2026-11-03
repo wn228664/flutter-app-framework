@@ -4,6 +4,16 @@
 
 只有 Android / iOS 工程，没有 Flutter Web 或桌面端入口。默认首页、外观设置和示例动作本地运行，无需账号或后端；没有业务模型、接口、生产域名、支付/客服/推送 SDK、原应用标识或发布凭证。
 
+## 运行截图
+
+2026-11-03 采集，源码版本 `dc9364a` 构建为 Android APK 后，在 Android 模拟器（API 35）中实际运行。下方展示 Android APP 界面，iOS 运行情况需在对应环境单独验证。
+
+| APP 首页与导航 | 外观设置与深色主题 |
+| --- | --- |
+| <img src="docs/screenshots/flutter-home.png" alt="Flutter Android APP 首页运行截图" width="280" /> | <img src="docs/screenshots/flutter-settings.png" alt="Flutter Android APP 深色外观运行截图" width="280" /> |
+
+首页展示路由入口与通用提示能力；外观设置支持跟随系统、浅色和深色，页面共享统一主题状态。
+
 ## 环境要求
 
 | 项目 | 要求与已验证范围 |

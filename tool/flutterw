@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eu
+if [ -n "${FLUTTER_BIN:-}" ]; then
+  exec "$FLUTTER_BIN" "$@"
+fi
+if command -v flutter >/dev/null 2>&1; then
+  exec flutter "$@"
+fi
+project_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+if [ -f "$project_dir/android/local.properties" ]; then
+  sdk_dir=$(sed -n 's/^flutter.sdk=//p' "$project_dir/android/local.properties")
+  if [ -x "$sdk_dir/bin/flutter" ]; then
+    exec "$sdk_dir/bin/flutter" "$@"
+  fi
+fi
+echo 'Flutter 未找到，请将 flutter 加入 PATH 或设置 FLUTTER_BIN。' >&2
+exit 127

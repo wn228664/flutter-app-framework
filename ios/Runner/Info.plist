@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- iOS 应用公开元数据；版本与标识从构建设置替换，不存储会话或后端秘密。 -->
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<!-- 开发语言跟随 Xcode 工程配置。 -->
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<!-- 系统桌面显示的中性应用名称。 -->
 	<key>CFBundleDisplayName</key>
 	<string>App Framework</string>
+	<!-- 可执行文件名由 Xcode 构建目标提供。 -->
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<!-- 安装包标识跟随构建设置，派生应用应与签名能力一起配置。 -->
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<!-- Apple 属性清单格式版本，保持工具链约定。 -->
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<!-- 包内部名称，与用户可见名称分别维护。 -->
 	<key>CFBundleName</key>
 	<string>flutter_app_framework</string>
+	<!-- 声明为 iOS 应用包。 -->
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<!-- 用户版本号来源于 pubspec/Flutter 构建变量。 -->
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
+	<!-- 保留 Xcode 模板兼容字段，不用作现代代码签名。 -->
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<!-- 构建号来源于 Flutter 构建变量。 -->
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<!-- 限制为 iOS 应用运行环境。 -->
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<!-- 原生首帧前使用的启动 storyboard。 -->
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<!-- Flutter 宿主控制器使用的主 storyboard。 -->
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<!-- iPhone 允许竖屏及两个横屏方向。 -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- iPad 同时允许两个竖屏和两个横屏方向。 -->
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -41,8 +57,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- 允许支持设备使用更高刷新率，由 Flutter 引擎管理帧调度。 -->
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- 启用系统间接输入事件支持。 -->
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>

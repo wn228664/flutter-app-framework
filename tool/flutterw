@@ -1,13 +1,17 @@
 #!/bin/sh
+# Flutter 命令入口：优先显式 FLUTTER_BIN，再查 PATH，最后读取本项目 local.properties；透传参数与退出状态。
 set -eu
+# FLUTTER_BIN：调用方显式指定的 Flutter 可执行文件；非空时不再猜测其他 SDK。
 if [ -n "${FLUTTER_BIN:-}" ]; then
   exec "$FLUTTER_BIN" "$@"
 fi
 if command -v flutter >/dev/null 2>&1; then
   exec flutter "$@"
 fi
+# project_dir：根据脚本自身位置解析的项目绝对目录，不依赖调用者当前工作目录。
 project_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 if [ -f "$project_dir/android/local.properties" ]; then
+  # sdk_dir：Android 本地配置记录的 Flutter SDK 根目录，仅在存在可执行 bin/flutter 时使用。
   sdk_dir=$(sed -n 's/^flutter.sdk=//p' "$project_dir/android/local.properties")
   if [ -x "$sdk_dir/bin/flutter" ]; then
     exec "$sdk_dir/bin/flutter" "$@"

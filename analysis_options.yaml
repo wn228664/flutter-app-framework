@@ -1,8 +1,11 @@
+# 继承当前锁定版本 flutter_lints，下面仅追加本工程要求。
 include: package:flutter_lints/flutter.yaml
+# 保护态与测试专用成员越界访问直接视为错误。
 analyzer:
   errors:
     invalid_use_of_protected_member: error
     invalid_use_of_visible_for_testing_member: error
+# 约束动态调用、调试输出、资源释放及 Future 所有权，避免异步工作静默遗留。
 linter:
   rules:
     avoid_dynamic_calls: true

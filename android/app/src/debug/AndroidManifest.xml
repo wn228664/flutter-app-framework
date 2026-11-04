@@ -1,7 +1,6 @@
+<!-- Android 权限与启动声明；调试/性能清单会与 main 合并，不引入业务组件。 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- The INTERNET permission is required for development. Specifically,
-         the Flutter tool needs it to communicate with the running application
-         to allow setting breakpoints, to provide hot reload, etc.
-    -->
+
+    <!-- INTERNET 供 HTTP、WebView 及开发调试通信使用，不申请联系人或文件广泛访问权限。 -->
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

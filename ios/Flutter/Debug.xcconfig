@@ -1,2 +1,4 @@
+// 原生依赖配置与 Flutter 生成配置组合入口；Pods 可选包含，Generated.xcconfig 必须由当前目标 pub get 生成。
+
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
 #include "Generated.xcconfig"

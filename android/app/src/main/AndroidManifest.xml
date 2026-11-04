@@ -1,10 +1,14 @@
+<!-- Android 权限与启动声明；调试/性能清单会与 main 合并，不引入业务组件。 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- INTERNET 供 HTTP、WebView 及开发调试通信使用，不申请联系人或文件广泛访问权限。 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 禁止系统备份应用数据；名称和图标属于本目标原生壳，applicationName 由 Flutter 构建替换。 -->
     <application
         android:allowBackup="false"
         android:label="App Framework"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- 唯一启动 Activity：singleTop 复用实例，配置变化交给 Flutter，键盘出现时调整窗口大小。 -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -14,30 +18,23 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-            <!-- Specifies an Android theme to apply to this Activity as soon as
-                 the Android process has started. This theme is visible to the user
-                 while the Flutter UI initializes. After that, this theme continues
-                 to determine the Window background behind the Flutter UI. -->
+            <!-- 首帧前后使用 NormalTheme 作为原生窗口背景，不能代替 Dart 主题。 -->
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- 将此 Activity 注册为系统桌面启动入口。 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- Don't delete the meta-data below.
-             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <!-- Flutter v2 embedding 标记，工具链据此完成插件注册。 -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-    <!-- Required to query activities that can process text, see:
-         https://developer.android.com/training/package-visibility and
-         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
-
-         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <!-- 仅声明纯文本处理器的可见性，供 Flutter ProcessTextPlugin 查询文本操作。 -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>

@@ -1,32 +1,40 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '12.0'
+# iOS 依赖组装：使用本机 Flutter 官方 podhelper，生成文件缺失时终止，不在此保存业务配置或签名凭据。
 
-# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+# iOS 最低版本沿用 Runner 工程配置；未在 Podfile 另设 platform，CocoaPods 会据工程自动推断。
+
+# 关闭 CocoaPods 同步统计，避免构建前等待无关网络请求。
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
+# Xcode 构建配置到 CocoaPods 模式的映射，Profile 与 Release 共用发布依赖配置。
 project 'Runner', {
   'Debug' => :debug,
   'Profile' => :release,
   'Release' => :release,
 }
 
+# 解析 Flutter 生成配置中的 SDK 根目录；未 pub get 或缺少 FLUTTER_ROOT 时明确报错。
 def flutter_root
+  # generated_xcode_build_settings_path：Flutter pub get 产生的本项目 xcconfig 绝对路径。
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
   unless File.exist?(generated_xcode_build_settings_path)
     raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
   end
 
+  # line：当前 xcconfig 行；仅提取 FLUTTER_ROOT，不执行其中的其他文本。
   File.foreach(generated_xcode_build_settings_path) do |line|
+    # matches：当前行的 SDK 根目录匹配结果，命中后去空白并立即返回。
     matches = line.match(/FLUTTER_ROOT\=(.*)/)
     return matches[1].strip if matches
   end
   raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
 end
 
+# 加载当前 SDK 官方 podhelper，避免复制插件安装逻辑。
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
 flutter_ios_podfile_setup
 
+# Runner 目标安装 Flutter 插件 Pods，测试目标只继承搜索路径。
 target 'Runner' do
   use_frameworks!
 
@@ -36,7 +44,9 @@ target 'Runner' do
   end
 end
 
+# installer：CocoaPods 已解析工程；逐目标补充当前 Flutter SDK 要求的构建设置。
 post_install do |installer|
+  # target：当前 Pod 原生目标，不是 Flutter 路由或业务模块。
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
   end

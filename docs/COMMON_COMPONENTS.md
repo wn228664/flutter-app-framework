@@ -72,4 +72,6 @@ WebView 的 url / javascriptEnabled / allowedHosts 变化会使用新 controller
 
 `make verify`：静态分析无问题、28 项测试通过。覆盖请求/旧会话、动作锁、存储失败恢复、主题顺序、网络竞态与刷新、分页、窄屏/横屏大字号、顶部消息、头像、WebView 配置与事件隔离。Android Debug APK 构建通过。
 
-iOS 最新一次 Pod 安装成功，Xcode 因缺少可用的 iOS 26.0 设备平台拒绝构建目的地；iOS 编译与真机交互未验证。Android 本轮最终包安装成功，系统启动返回 Status: ok 且进程存在；设备锁屏，未执行画面与真机全交互；平台插件的实际权限、Keychain / Keystore 行为及未来业务服务仍需对应环境验收。
+2026-11-04 再次验证：分析零问题、28 项测试及 Android Debug 构建通过；API 35 ARM64 模拟器安装并启动本轮 APK，检查首页、设置、浅色选择、进程重启后外观保留和顶部消息，未发现 AndroidRuntime/Flutter 错误日志。这是模拟器关键路径验证，真实设备权限、安全存储和网页交互仍需独立确认。
+
+iOS Pod 安装成功。`xcodebuild -showsdks` 能列出 iOS 26.0 SDK，但无签名构建的 Xcode 目的地检查仍报设备平台未安装；`simctl` 也没有可用运行时。iOS 编译和运行尚未通过，不能由 SDK 列表或 Android 成功推断。注释范围及生成文件例外见 `ANNOTATION_SCOPE.md`。
